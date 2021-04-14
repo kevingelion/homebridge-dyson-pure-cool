@@ -180,6 +180,7 @@ DysonPureCoolPlatform.prototype.signIn = function (callback) {
                 platform.log.warn('Error while signing in. Error: ' + error);
             } else if (response.statusCode != 200) {
                 platform.log.warn('Error while signing in. Status Code: ' + response.statusCode);
+                platform.log.warn(response, body);
             } else if (!body || !body.Account || !body.Password) {
                 platform.log.warn('Error while signing in. Could not get Account/Password parameter from response: ' + JSON.stringify(body));
             }
@@ -200,7 +201,7 @@ DysonPureCoolPlatform.prototype.signIn = function (callback) {
 DysonPureCoolPlatform.prototype.getDevicesFromApi = function (callback) {
     const platform = this;
 
-    // Checks if the user is signed in 
+    // Checks if the user is signed in
     if (!platform.authorizationHeader) {
         return platform.signIn(function (result) {
             if (result) {
